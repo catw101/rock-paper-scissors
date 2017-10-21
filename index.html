@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<!--Catelen Wu-->
+<html>
+	<head>
+		<title></title>		
+		<script>
+			function initialize()
+			{
+				ROCK = 1;
+				PAPER = 2;
+				SCISSOR = 3;
+				TIE = 0;
+				COMPUTER = 1;
+				PLAYER = 2;
+				playerScore = 0;
+				computerScore = 0;
+				img1 = "rock.jpg";
+				img2 = "scissors.jpg";
+				img3 = "paper.jpg";
+				win = document.getElementById("winner");
+				playerWin = document.getElementById("playerscore");
+				compWin = document.getElementById("compscore");
+				choices = document.getElementById("choice");
+				compChoices = document.getElementById("compchoice");
+				pick = document.getElementById("picked");
+				compick = document.getElementById("compicked");
+				reaction = document.getElementById("referee_reaction");
+			}
+			function game(choice)
+			{
+				playerChoice = choice; 
+					if (playerChoice == ROCK)
+						pick.src = img1;
+					else if (playerChoice ==SCISSOR)
+						pick.src = img2;
+					else 
+						pick.src = img3;
+				randomChoice();
+				roundWin();
+				updateScore();
+				display();
+			}
+			function randomChoice()
+			{
+				computerChoice = parseInt(Math.random()*3)+1;
+				if (computerChoice == 1)
+				{
+					theirchoice = "rock.";
+					compick.src = img1;
+				}
+				else if (computerChoice == 2)
+				{
+					theirchoice = "paper.";
+					compick.src = img3;
+				}
+				else
+				{				
+					theirchoice = "scissors.";
+					compick.src = img2;
+				}
+			}
+			function roundWin()
+			{
+				if (playerChoice == computerChoice)
+					{
+					roundWinner = "Tie!";
+					reaction.src = "referee_tie.jpg";
+					}
+				else if (playerChoice == ROCK && computerChoice == SCISSOR || 
+				playerChoice == SCISSOR && computerChoice == PAPER ||
+				playerChoice == PAPER && computerChoice == ROCK)
+					{
+					roundWinner = "Player won!";
+					reaction.src = "referee_left.jpg";
+					}
+				else 
+					{
+					roundWinner = "Computer won!";
+					reaction.src = "referee_right.jpg";
+					}
+			}
+			function updateScore()
+			{
+				if (roundWinner == "Player won!")
+					playerScore += 1;	
+				if (roundWinner == "Computer won!") 
+					computerScore += 1;
+			}
+			function choice(word)
+			{
+				choices.innerHTML = word;
+			}
+			function reset()
+			{
+				location.reload();
+			}
+			function display()
+			{
+				win.innerHTML = roundWinner;
+				playerWin.innerHTML = playerScore;
+				compWin.innerHTML = computerScore;
+				compChoices.innerHTML = theirchoice;
+			}
+		</script>
+		<style>
+		p {
+			font-family: Georgia;
+			font-size: 25pt;
+			color: brown;
+			text-align: center;
+		}
+		h1 {
+			color: green;
+			font-family: Georgia;
+			font-size: 20pt;
+		}
+		#player {
+			float: left;
+		}
+		#comp {
+			float: right;
+		}
+		.img img {
+			width: 15%;
+			height: 15%;
+			cursor: pointer;
+		}
+		#button {
+			text-align: center;
+		}
+		button {
+			font-family: Georgia;
+			font-size: 15pt;
+			cursor: pointer;
+		}
+		#playerpicture {
+			float: left;
+		}
+		#picked {
+			width: 50%;
+			height: 50%;
+		}
+		#computerpicture {
+			float: right;
+		}
+		#compicked {	
+			width: 50%;
+			height: 50%;
+		}
+		#referee {
+			text-align: center;
+		}
+		#referee_reaction {
+			width: 20%;
+			height: 20%;
+		}
+		</style>
+	</head>
+	<body onload="initialize();">
+	<div id = "button">
+		<button onclick = "reset();">RESTART GAME</button>
+	</div>
+	<div>
+	<h1 id = "player">Player's Score: <span id = "playerscore">0</span></h1>
+	<h1 id = "comp">Computer's Score: <span id = "compscore">0</span></h1>
+	</div>
+	<p>You chose <span id = "choice">?</span></p>
+	<p>The computer chose <span id = "compchoice">?</span></p>
+	<p id = "winner"></p>
+	<div class = "img">
+	<img src = "rock.jpg" onclick = "game(ROCK); choice('rock.');"/>
+	<img src = "paper.jpg" onclick = "game(PAPER); choice('paper.');"/>
+	<img src = "scissors.jpg" onclick = "game(SCISSOR); choice('scissors.');"/>
+	</div>
+	<div>
+	<h6 id = "playerpicture"><img id = "picked"/></h6>
+	<h6 id = "computerpicture"><img id = "compicked"/></h6>
+	<h6 id = "referee"><img id = "referee_reaction"/></h6>
+	</div>
+	</body>
+</html>
